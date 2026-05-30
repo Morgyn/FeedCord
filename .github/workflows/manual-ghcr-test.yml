@@ -3,6 +3,9 @@ name: Manual Build and Push Test Image
 on:
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   packages: write
@@ -28,10 +31,10 @@ jobs:
       - name: Normalize registry owner to lowercase
         run: echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_ENV"
 
-      - name: Build and push image:test
+      - name: Build and push feedcord:test
         uses: docker/build-push-action@v6
         with:
           context: FeedCord
           file: FeedCord/Dockerfile
           push: true
-          tags: ghcr.io/${{ env.OWNER_LC }}/image:test
+          tags: ghcr.io/${{ env.OWNER_LC }}/feedcord:test
